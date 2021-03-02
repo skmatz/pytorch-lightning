@@ -31,8 +31,9 @@ from pytorch_lightning.plugins import (
     DDPSpawnPlugin,
     DDPSpawnShardedPlugin,
     DeepSpeedPlugin,
+    ParallelPlugin,
     PrecisionPlugin,
-    SingleDevicePlugin, ParallelPlugin,
+    SingleDevicePlugin,
 )
 from pytorch_lightning.plugins.environments import ClusterEnvironment, SLURMEnvironment, TorchElasticEnvironment
 from pytorch_lightning.utilities.exceptions import MisconfigurationException
