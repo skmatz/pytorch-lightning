@@ -1586,12 +1586,15 @@ def test_pytorch_profiler_nested(tmpdir):
 
     for n in ('a', 'b', 'c'):
         pa[n] = [e.name for e in pa[n]]
-        if LooseVersion(torch.__version__) >= LooseVersion("1.7.1"):
+        if LooseVersion(torch.__version__) >= LooseVersion("1.7.0"):
             pa[n] = [e.replace("aten::", "") for e in pa[n]]
         assert pa[n] == expected_[n]
 
 
-@RunIf(min_gpus=1, special=True)
+@pytest.mark.skipif(torch.cuda.device_count() < 1, reason="test requires GPU machine")
+@pytest.mark.skipif(
+    not os.getenv("PL_RUNNING_SPECIAL_TESTS", '0') == '1', reason="test should be run outside of pytest"
+)
 def test_pytorch_profiler_nested_emit_nvtx(tmpdir):
     """
     This test check emit_nvtx is correctly supported
